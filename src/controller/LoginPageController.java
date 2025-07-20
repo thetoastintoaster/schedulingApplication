@@ -61,10 +61,8 @@ public class LoginPageController implements Initializable {
         Locale currentLocale = Locale.getDefault();
         ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 
-        /*
-        Locale frenchLocale = new Locale("fr");
-        ResourceBundle messages = ResourceBundle.getBundle("messages", frenchLocale);
-        */
+//        Locale frenchLocale = new Locale("fr");
+//        ResourceBundle messages = ResourceBundle.getBundle("messages", frenchLocale);
 
 
         String usernameText = messages.getString("username");
@@ -111,8 +109,68 @@ public class LoginPageController implements Initializable {
                 stage.setTitle("Software II WGU");
                 stage.show();
             }
+
+            if ((!Objects.equals(userName, firstUser.userName) && !Objects.equals(userName,"")) && (!Objects.equals(password, firstUser.password) && !Objects.equals(password,""))) {
+                alertMessage(1);
+            }
+
+            if (Objects.equals(userName, "") && Objects.equals(password, "")) {
+                alertMessage(5);
+            } else if (Objects.equals(userName, "")) {
+                alertMessage(2);
+            } else if (Objects.equals(password, "")) {
+                alertMessage(3);
+            }
+
+
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            alertMessage(4);
+
+        }
+    }
+    private void alertMessage(int alertType) {
+
+        Locale currentLocale = Locale.getDefault();
+        ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
+
+//        Locale frenchLocale = new Locale("fr");
+//        ResourceBundle messages = ResourceBundle.getBundle("messages", frenchLocale);
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        switch (alertType) {
+            case 1:
+                alert.setTitle(messages.getString("error"));
+                alert.setHeaderText(messages.getString("incorrect_credentials"));
+                alert.setContentText(messages.getString("user_or_pass_incorrect"));
+                alert.showAndWait();
+                break;
+            case 2:
+                alert.setTitle(messages.getString("error"));
+                alert.setHeaderText(messages.getString("no_input_username"));
+                alert.setContentText(messages.getString("username_field_is_blank"));
+                alert.showAndWait();
+                break;
+            case 3:
+                alert.setTitle(messages.getString("error"));
+                alert.setHeaderText(messages.getString("no_input_password"));
+                alert.setContentText(messages.getString("password_is_blank"));
+                alert.showAndWait();
+                break;
+            case 4:
+                alert.setTitle(messages.getString("error"));
+                alert.setHeaderText(messages.getString("login_error"));
+                alert.setContentText(messages.getString("unable_to_login"));
+                alert.showAndWait();
+                break;
+
+            case 5:
+                alert.setTitle(messages.getString("error"));
+                alert.setHeaderText(messages.getString("no_input"));
+                alert.setContentText(messages.getString("both_fields_are_blank"));
+                alert.showAndWait();
+                break;
         }
     }
 
