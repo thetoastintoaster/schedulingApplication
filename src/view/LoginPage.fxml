@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginPageController">
+<VBox prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginPageController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -18,7 +18,7 @@
             <Label id="locationID" fx:id="locationID" layoutX="89.0" layoutY="355.0" text="[INSERT LOCATION]" />
             <Label id="locationLabel" fx:id="locationLabel" layoutX="23.0" layoutY="355.0" text="Location:" />
             <Button id="loginButton" fx:id="loginButton" layoutX="339.0" layoutY="225.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
-            <Button id="exitButton" fx:id="exitButton" layoutX="417.0" layoutY="225.0" mnemonicParsing="false" text="Exit" />
+            <Button id="exitButton" fx:id="exitButton" layoutX="417.0" layoutY="225.0" mnemonicParsing="false" text="Exit" onAction="#exitBtn"/>
       </children>
     </AnchorPane>
   </children>

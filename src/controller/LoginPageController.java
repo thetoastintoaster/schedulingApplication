@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,16 +13,14 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Objects;
+import java.util.*;
 
 import model.User;
 import model.UserDatabase;
 
 import java.time.ZoneId;
-import java.util.ResourceBundle;
 
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 
@@ -123,12 +122,25 @@ public class LoginPageController implements Initializable {
             }
 
 
-
         } catch (Exception e) {
             alertMessage(4);
 
         }
     }
+
+    public void exitBtn(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Closing...");
+        alert.setContentText("Exit the application?");
+        Optional<ButtonType> res = alert.showAndWait();
+
+        if (res.isPresent() && res.get() == ButtonType.OK) {
+            Platform.exit();
+            System.exit(0);
+        }
+
+    }
+
     private void alertMessage(int alertType) {
 
         Locale currentLocale = Locale.getDefault();

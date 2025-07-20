@@ -26,7 +26,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/LoginPage.fxml"));
+        loader.setLocation(getClass().getResource("/Home.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
