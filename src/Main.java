@@ -24,12 +24,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        Locale currentLocale = Locale.getDefault();
-        Locale frenchLocale = new Locale("fr");
-        ResourceBundle messages = ResourceBundle.getBundle("messages", frenchLocale);
-
-        String languageTest = messages.getString("testWord");
-        System.out.println(languageTest);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/LoginPage.fxml"));

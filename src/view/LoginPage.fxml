@@ -11,19 +11,14 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
             <PasswordField id="passwordID" fx:id="passwordID" layoutX="274.0" layoutY="169.0" />
-            <Label layoutX="198.0" layoutY="135.0" text="Username" />
-            <Label layoutX="200.0" layoutY="174.0" text="Password" />
+            <Label id="usernameLabel" fx:id="usernameLabel" layoutX="198.0" layoutY="135.0" text="Username" />
+            <Label id="passwordLabel" fx:id="passwordLabel" layoutX="200.0" layoutY="174.0" text="Password" />
             <TextField id="userNameID" fx:id="userNameID" layoutX="274.0" layoutY="130.0" />
             <Label id="locationID" fx:id="locationID" layoutX="89.0" layoutY="355.0" text="[INSERT LOCATION]" />
-            <Label layoutX="23.0" layoutY="355.0" text="Location:" />
-            <Button id="loginButton" layoutX="339.0" layoutY="225.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
-            <Button id="exitButton" layoutX="417.0" layoutY="225.0" mnemonicParsing="false" text="Exit" />
+            <Label id="locationLabel" fx:id="locationLabel" layoutX="23.0" layoutY="355.0" text="Location:" />
+            <Button id="loginButton" fx:id="loginButton" layoutX="339.0" layoutY="225.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
+            <Button id="exitButton" fx:id="exitButton" layoutX="417.0" layoutY="225.0" mnemonicParsing="false" text="Exit" />
       </children>
     </AnchorPane>
   </children>
