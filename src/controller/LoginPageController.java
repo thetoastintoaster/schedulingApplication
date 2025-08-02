@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AppointmentDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +13,18 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.*;
 
+import model.Appointments;
 import model.User;
 import model.UserDatabase;
 
@@ -38,15 +48,8 @@ public class LoginPageController implements Initializable {
 
 
     @FXML private Label locationID;
-//    if(userNameID = ) {
-//
-//    }
-//
-
-//    public LoginPageController(TextField userNameID, PasswordField passwordID) {
-//    this.userNameID = userNameID;
-//    this.passwordID = passwordID;
-//    }
+    @FXML private TextField usernameField;
+    @FXML private TextField passwordField;
 
     static int userID = UserDatabase.incrementUserID();
     static User firstUser = new User(userID,"companyUser1","password123");
@@ -77,54 +80,109 @@ public class LoginPageController implements Initializable {
 
     }
 
-//    @FXML public static String loadLocation(){
-//        ZoneId zoneId = ZoneId.systemDefault();
-//        //        String location = locationID.setText(currentLocation);
-//        return zoneId.toString();
-//    }
-//
-//    public void setLocation() {
-//        String location = loadLocation();
-//        locationID.setText(location);
-//        locationID.setText(location);
-//    }
 
     public static void addTestUser() {
         UserDatabase.addUser(firstUser);
     }
-    public void loginButtonAction(ActionEvent event){
-        try{
-            String userName = userNameID.getText();
-            String password = passwordID.getText();
+    @FXML
+    private void loginButtonAction(ActionEvent event) {
+        String usernameInput = usernameField.getText().trim();
+        String passwordInput = passwordField.getText().trim();
 
-            if(Objects.equals(userName, firstUser.userName) && Objects.equals(password, firstUser.password)) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/Home.fxml"));
-                Parent root = loader.load();
+        if (usernameInput.isEmpty() && passwordInput.isEmpty()) {
+            alertMessage(5);
+            return;
+        } else if (usernameInput.isEmpty()) {
+            alertMessage(2);
+            return;
+        } else if (passwordInput.isEmpty()) {
+            alertMessage(3);
+            return;
+        }
 
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("Software II WGU");
-                stage.show();
+        boolean login = false;
+        String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
+        String username = "sqlUser";
+        String password = "passw0rd!";
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, usernameInput);
+                ps.setString(2, passwordInput);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    login = true;
+                    logLogin(usernameInput, true);
+
+                    checkUpcomingAppointments(usernameInput);
+
+                    // Load home screen
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Main Menu");
+                    stage.show();
+
+
+                } else {
+                    logLogin(usernameInput, false);
+                    alertMessage(1);
+                }
             }
-
-            if ((!Objects.equals(userName, firstUser.userName) && !Objects.equals(userName,"")) && (!Objects.equals(password, firstUser.password) && !Objects.equals(password,""))) {
-                alertMessage(1);
-            }
-
-            if (Objects.equals(userName, "") && Objects.equals(password, "")) {
-                alertMessage(5);
-            } else if (Objects.equals(userName, "")) {
-                alertMessage(2);
-            } else if (Objects.equals(password, "")) {
-                alertMessage(3);
-            }
-
-
         } catch (Exception e) {
-            alertMessage(4);
+            e.printStackTrace();
+//            showAlert("Error", "An error occurred: " + e.getMessage());
+        }
+    }
 
+    // Method that logs login activity to a text file
+    private void logLogin(String username, boolean success) {
+        try (FileWriter writer = new FileWriter("login_activity.txt", true)) {
+            ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.systemDefault());
+            String status = success ? "SUCCESS" : "FAILURE";
+            writer.write(String.format("User: %s | Time: %s | Status: %s%n", username, timestamp, status));
+        } catch (IOException e) {
+            System.out.println("Error logging login attempt.");
+        }
+    }
+
+    // Method that checks the upcoming appointments
+    private void checkUpcomingAppointments(String username) {
+        ZoneId userZone = ZoneId.systemDefault();
+        ZonedDateTime now = ZonedDateTime.now(userZone);
+        ZonedDateTime in15Min = now.plusMinutes(15);
+
+        // Gets all of the appointments
+        List<Appointments> appointments = AppointmentDAO.getAllAppointments();
+
+        // Filters the list of appointments for an appointment that starts within the next 15 minutes
+        Optional<Appointments> upcomingAppointment = appointments.stream()
+                .filter(appointment -> {
+                    ZonedDateTime startLocal = appointment.getStartDateTime()
+                            .atZone(ZoneOffset.UTC)
+                            .withZoneSameInstant(userZone);
+                    return startLocal.isAfter(now) && startLocal.isBefore(in15Min);
+                })
+                .findFirst();
+
+        // If an appointment is within/not within the next 15 minutes, display an alert message
+        if (upcomingAppointment.isPresent()) {
+            Appointments appointment = upcomingAppointment.get();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Upcoming Appointment");
+            alert.setHeaderText("You have an appointment within 15 minutes.");
+            alert.setContentText("ID: " + appointment.getAppointmentId() +
+                    "\nDate: " + appointment.getStartTime().toLocalDate() +
+                    "\nTime: " + appointment.getStartTime().toLocalTime());
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No Upcoming Appointments");
+            alert.setHeaderText(null);
+            alert.setContentText("You have no appointments within the next 15 minutes.");
+            alert.showAndWait();
         }
     }
 
@@ -141,6 +199,7 @@ public class LoginPageController implements Initializable {
 
     }
 
+    // Method for the alert messages
     private void alertMessage(int alertType) {
 
         Locale currentLocale = Locale.getDefault();

@@ -7,19 +7,20 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginPageController">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-            <PasswordField id="passwordID" fx:id="passwordID" layoutX="274.0" layoutY="169.0" />
-            <Label id="usernameLabel" fx:id="usernameLabel" layoutX="198.0" layoutY="135.0" text="Username" />
-            <Label id="passwordLabel" fx:id="passwordLabel" layoutX="200.0" layoutY="174.0" text="Password" />
-            <TextField id="userNameID" fx:id="userNameID" layoutX="274.0" layoutY="130.0" />
-            <Label id="locationID" fx:id="locationID" layoutX="89.0" layoutY="355.0" text="[INSERT LOCATION]" />
-            <Label id="locationLabel" fx:id="locationLabel" layoutX="23.0" layoutY="355.0" text="Location:" />
-            <Button id="loginButton" fx:id="loginButton" layoutX="339.0" layoutY="225.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
-            <Button id="exitButton" fx:id="exitButton" layoutX="417.0" layoutY="225.0" mnemonicParsing="false" text="Exit" onAction="#exitBtn"/>
-      </children>
-    </AnchorPane>
-  </children>
+<VBox prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginPageController" alignment="CENTER">
+    <children>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS"
+                    AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <children>
+                <PasswordField id="passwordID" fx:id="passwordField" layoutX="274.0" layoutY="169.0" />
+                <Label id="usernameLabel" fx:id="usernameLabel" layoutX="198.0" layoutY="135.0" text="Username" />
+                <Label id="passwordLabel" fx:id="passwordLabel" layoutX="200.0" layoutY="174.0" text="Password" />
+                <TextField id="userNameID" fx:id="usernameField" layoutX="274.0" layoutY="130.0" />
+                <Label id="locationID" fx:id="locationID" layoutX="89.0" layoutY="355.0" text="[INSERT LOCATION]" />
+                <Label id="locationLabel" fx:id="locationLabel" layoutX="23.0" layoutY="355.0" text="Location:" />
+                <Button id="loginButton" fx:id="loginButton" layoutX="339.0" layoutY="225.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
+                <Button id="exitButton" fx:id="exitButton" layoutX="417.0" layoutY="225.0" mnemonicParsing="false" onAction="#exitBtn" text="Exit" />
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>

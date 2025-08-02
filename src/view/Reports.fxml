@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
+    <children>
+        <TabPane layoutX="22.0" layoutY="136.0" prefHeight="477.0" prefWidth="1237.0" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="21.0">
+            <tabs>
+                <Tab closable="false" text="Appointments by Month/Type">
+                    <content>
+                        <TableView fx:id="monthlyTypeReportTable" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                            <columns>
+                                <TableColumn fx:id="monthCol" text="Month" />
+                                <TableColumn fx:id="typeCol" text="Type" />
+                                <TableColumn fx:id="totalCol" text="Total Appointments" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Schedule by Contact">
+                    <content>
+                        <TableView fx:id="contactScheduleTable" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                            <columns>
+                                <TableColumn fx:id="apptIdCol" text="Appt ID" />
+                                <TableColumn fx:id="apptTitleCol" text="Title" />
+                                <TableColumn fx:id="apptTypeCol" text="Type" />
+                                <TableColumn fx:id="apptDescCol" text="Description" />
+                                <TableColumn fx:id="apptStartCol" text="Start" />
+                                <TableColumn fx:id="apptEndCol" text="End" />
+                                <TableColumn fx:id="apptCustIdCol" text="Customer ID" />
+                                <TableColumn fx:id="apptContactCol" text="Contact" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Appointments per Customer">
+                    <content>
+                        <TableView fx:id="appointmentsPerCustomerTable" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                            <columns>
+                                <TableColumn fx:id="custIdCol" text="Customer ID" />
+                                <TableColumn fx:id="custNameCol" text="Customer Name" />
+                                <TableColumn fx:id="apptCountCol" text="Total Appointments" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <Label layoutX="65.0" layoutY="50.0" style="-fx-font-weight: bold;" text="Reports">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+      <Button layoutX="1097.0" layoutY="77.0" mnemonicParsing="false" onAction="#returnBtn" prefHeight="31.0" prefWidth="116.0" text="Return" />
+    </children>
+</AnchorPane>
