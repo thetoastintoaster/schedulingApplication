@@ -1,10 +1,12 @@
 package model;
 
 public class ContactSchedule {
+
     private final int appointmentId;
     private final String title, type, description, start, end, contact;
     private final int customerId;
 
+    // Contact schedule constructor
     public ContactSchedule(int appointmentId, String title, String type, String description,
                            String start, String end, int customerId, String contact) {
         this.appointmentId = appointmentId;
@@ -17,6 +19,7 @@ public class ContactSchedule {
         this.contact = contact;
     }
 
+    // ContactSchedule getters
     public int getAppointmentId() { return appointmentId; }
     public String getTitle() { return title; }
     public String getType() { return type; }

@@ -96,6 +96,7 @@ public class UpdateCustomer implements Initializable {
             e.printStackTrace();
         }
 
+        // A lambda expression is used here because it makes the code easier to read
         countryComboBox.setOnAction(event -> {
             String selectedCountry = countryComboBox.getValue();
             if (selectedCountry != null && countryMap.containsKey(selectedCountry)) {

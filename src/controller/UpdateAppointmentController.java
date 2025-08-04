@@ -22,8 +22,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController {
-    @FXML
-    private TextField appointmentIdField;
+
+    // Initializing the variables to use for the respective fields in the update appointment window
+    @FXML private TextField appointmentIdField;
     @FXML private TextField appointmentNameField;
     @FXML private TextField appointmentDescriptionField;
     @FXML private TextField appointmentLocationField;
@@ -32,10 +33,9 @@ public class UpdateAppointmentController {
     @FXML private DatePicker appointmentEndDate;
     @FXML private ComboBox<String> appointmentStartTime;
     @FXML private ComboBox<String> appointmentEndTime;
-//    @FXML private TextField customerIdField;
-//    @FXML private TextField userIdField;
-//    @FXML private TextField contactIdField;
 
+    // Drop down menus (ContactId is a string because later in the code, the Id is
+    // replaced with the respective name of the contact
     @FXML private ComboBox<Integer> customerIdDropDownMenu;
     @FXML private ComboBox<Integer> userIdDropDownMenu;
     @FXML private ComboBox<String> contactIdDropDownMenu;
@@ -105,6 +105,8 @@ public class UpdateAppointmentController {
         }
 
     }
+
+    // Cancels the input and returns to /Home.fxml
     public void cancelButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Alert");
@@ -125,6 +127,7 @@ public class UpdateAppointmentController {
         }
     }
 
+    // Adds the changes to the database
     public void saveButton(ActionEvent actionEvent) {
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
 
@@ -177,6 +180,7 @@ public class UpdateAppointmentController {
                  return;
              }
 
+             // Update query
             String sql = "UPDATE appointments SET title=?, description=?, location=?, type=?, start=?, end=?, " +
                     "customer_id=?, user_id=?, contact_id=? WHERE appointment_id=?";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -210,11 +214,5 @@ public class UpdateAppointmentController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error updating appointment: " + e.getMessage());
             alert.showAndWait();
         }
-    }
-
-    public void customerSearch(KeyEvent keyEvent) {
-    }
-
-    public void customerSearchBtn(ActionEvent actionEvent) {
     }
 }

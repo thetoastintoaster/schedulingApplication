@@ -91,6 +91,8 @@ public class HomeController implements Initializable {
 
         // Properly sets up the start and end times for the appointments
         DateTimeFormatter newTimeFormat = DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a");
+
+        // A lambda expression is used here because it makes the code easier to read
         appointmentStartCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStartDateTime().format(newTimeFormat)));
         appointmentEndCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndDateTime().format(newTimeFormat)));
 
@@ -181,8 +183,10 @@ public class HomeController implements Initializable {
     }
 
 
+    // Method that displays the modify customer screen
     public void displayModifyCustomer(ActionEvent event) throws IOException {
 
+        // Gets the selected customer
         customerToModify = customerTable.getSelectionModel().getSelectedItem();
 
         if (customerToModify != null) {
@@ -201,6 +205,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    // Alert message helper function
     private void alertMessage(int alertType) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         switch (alertType) {
@@ -219,6 +224,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    // Method that filters the appointments based on which radio button is selected
     @FXML
     public void filterAppointments(ActionEvent event) {
         ObservableList<Appointments> filteredList = FXCollections.observableArrayList();
@@ -248,6 +254,7 @@ public class HomeController implements Initializable {
         appointmentTable.setItems(filteredList);
     }
 
+    // Method to delete customer from the database and refreshes the customer table
     public void deleteCustomer(ActionEvent event) throws IOException, SQLException {
 
         // Gets selected customer
@@ -301,7 +308,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Buttun that loads the report screen
+    // Button that loads the report screen
     public void reportsBtn(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Reports.fxml"));
@@ -359,6 +366,7 @@ public class HomeController implements Initializable {
 
     }
 
+    // Method that displays the modify appointment screen
     public void displayModifyAppointment(ActionEvent event) throws IOException {
         appointmentToModify = appointmentTable.getSelectionModel().getSelectedItem();
 
@@ -378,6 +386,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    // Method that displays the add appointment screen
     public void displayAddAppointment(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/AddAppointment.fxml"));
@@ -390,14 +399,7 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    public void appointmentSearchButton(){
-
-    }
-
-    public void customerSearch(){
-
-    }
-
+    // Method that displays the add customer screen
     public void displayAddCustomer(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/AddCustomer.fxml"));
@@ -410,10 +412,7 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    public void customerSearchBtn(){
-
-    }
-
+    // Closes the application
     public void exitBtn(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Closing...");
@@ -425,6 +424,7 @@ public class HomeController implements Initializable {
             System.exit(0);
         }
     }
+
 
         private void showAlert(String message) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

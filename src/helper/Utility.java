@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class Utility {
 
+    // Returns to the main screen
   public static void returnToHome(ActionEvent event) throws IOException {
       FXMLLoader modifyPartScreen = new FXMLLoader(Main.class.getResource("/Home.fxml"));
       Scene scene = new Scene(modifyPartScreen.load());

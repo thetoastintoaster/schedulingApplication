@@ -34,31 +34,6 @@
                 <Button layoutX="1006.0" layoutY="262.0" mnemonicParsing="false" onAction="#addButton" text="Add" />
                 <Button layoutX="1041.0" layoutY="543.0" mnemonicParsing="false" onAction="#cancelButton" text="Cancel" />
                 <Button layoutX="945.0" layoutY="543.0" mnemonicParsing="false" onAction="#saveButton" text="Save" />
-                <Button layoutX="945.0" layoutY="503.0" mnemonicParsing="false" onAction="#removeButton" text="Remove Associated Part" />
-                <Button layoutX="886.0" layoutY="20.0" mnemonicParsing="false" onAction="#appointmentSearchButton" text="Search" />
-                <TextField fx:id="appointmentSearchField" layoutX="960.0" layoutY="20.0" onKeyPressed="#appointmentSearch" prefHeight="26.0" prefWidth="188.0" promptText="Search by Part ID or Name" />
-                <TableView fx:id="appointmentTable" layoutX="594.0" layoutY="56.0" prefHeight="186.0" prefWidth="543.0">
-                    <columns>
-                        <TableColumn fx:id="partIDCol" prefWidth="30.0" text="Part ID" />
-                        <TableColumn fx:id="partNameCol" prefWidth="30.0" text="Part Name" />
-                        <TableColumn fx:id="partInventoryCol" prefWidth="45.0" text="Inventory Level" />
-                        <TableColumn fx:id="partPriceCol" prefWidth="55.0" text="Price/ Cost per Unit" />
-                    </columns>
-                    <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                    </columnResizePolicy>
-                </TableView>
-                <TableView fx:id="otherPartTable" layoutX="598.0" layoutY="307.0" prefHeight="186.0" prefWidth="536.0">
-                    <columns>
-                        <TableColumn fx:id="otherPartIDCol" prefWidth="30.0" text="Part ID" />
-                        <TableColumn fx:id="otherPartNameCol" prefWidth="30.0" text="Part Name" />
-                        <TableColumn fx:id="otherPartInventoryCol" prefWidth="45.0" text="Inventory Level" />
-                        <TableColumn fx:id="otherPartPriceCol" prefWidth="55.0" text="Price/ Cost per Unit" />
-                    </columns>
-                    <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                    </columnResizePolicy>
-                </TableView>
                 <ComboBox id="countryComboBox" fx:id="countryComboBox" layoutX="159.0" layoutY="362.0" prefHeight="31.0" prefWidth="211.0" promptText="Select a Country" visibleRowCount="3" />
                 <ComboBox id="divisionComboBox" fx:id="divisionComboBox" layoutX="189.0" layoutY="435.0" prefHeight="31.0" prefWidth="227.0" promptText="Select a State or Province" />
                 <Label layoutX="65.0" layoutY="367.0" text="Country" />

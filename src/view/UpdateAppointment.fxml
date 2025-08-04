@@ -60,8 +60,6 @@
             <AnchorPane layoutX="453.0" layoutY="78.0" prefHeight="310.0" prefWidth="709.0" style="-fx-border-color: gray; -fx-border-radius: 20;">
               <children>
                 <Label layoutX="25.0" layoutY="27.0" style="-fx-font-weight: bold;" text="Customers" />
-                <TextField fx:id="customerSearchTxt" layoutX="225.0" layoutY="22.0" onKeyPressed="#customerSearch" />
-                <Button layoutX="157.0" layoutY="23.0" onAction="#customerSearchBtn" text="Search" />
                 <TableView fx:id="customerTable" layoutX="26.0" layoutY="72.0" prefHeight="184.0" prefWidth="662.0">
                   <columns>
                     <TableColumn fx:id="customerIdCol" prefWidth="71.0" text="Customer ID" />

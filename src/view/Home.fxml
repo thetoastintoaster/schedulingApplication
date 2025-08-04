@@ -50,13 +50,12 @@
 
         <Label layoutX="65.0" layoutY="50.0" style="-fx-font-weight: bold;" text="Scheduling Application">
             <font>
-                <Font size="22.0" />
+                <Font size="18.0" />
             </font>
         </Label>
         <Button layoutX="1205.0" layoutY="659.0" mnemonicParsing="false" onAction="#exitBtn" text="Exit" />
         <AnchorPane layoutX="286.0" layoutY="9.0" prefHeight="310.0" prefWidth="709.0" style="-fx-border-color: gray; -fx-border-radius: 20;" AnchorPane.leftAnchor="286" AnchorPane.rightAnchor="285" AnchorPane.topAnchor="9">
             <children>
-                <TextField fx:id="customerSearchTxt" layoutX="225.0" layoutY="22.0" onKeyPressed="#customerSearch" />
                 <Label layoutX="25.0" layoutY="27.0" style="-fx-font-weight: bold;" text="Customers" />
                 <TableView fx:id="customerTable" layoutX="26.0" layoutY="72.0" prefHeight="184.0" prefWidth="662.0" AnchorPane.bottomAnchor="40" AnchorPane.leftAnchor="26" AnchorPane.rightAnchor="24" AnchorPane.topAnchor="72">
                     <columns>
@@ -73,7 +72,6 @@
                 <Button layoutX="330.0" layoutY="270.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
                 <Button layoutX="260.0" layoutY="270.0" mnemonicParsing="false" onAction="#displayModifyCustomer" text="Modify" />
                 <Button layoutX="210.0" layoutY="270.0" mnemonicParsing="false" onAction="#displayAddCustomer" text="Add" />
-                <Button layoutX="157.0" layoutY="23.0" mnemonicParsing="false" onAction="#customerSearchBtn" text="Search" />
             </children>
         </AnchorPane>
       <Button layoutX="1075.0" layoutY="35.0" mnemonicParsing="false" onAction="#reportsBtn" prefHeight="31.0" prefWidth="146.0" text="View Reports" />

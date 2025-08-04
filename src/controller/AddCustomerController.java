@@ -67,6 +67,7 @@ public class AddCustomerController implements Initializable {
         }
 
         // Once a country is selected, load all the related divisions/states to the divisions combo box
+        // A lambda expression is used here because it makes the code easier to read
         countryComboBox.setOnAction(event -> {
             String selectedCountry = countryComboBox.getValue();
             if (selectedCountry != null && countryMap.containsKey(selectedCountry)) {
@@ -166,16 +167,6 @@ public class AddCustomerController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void removeButton(){
-
-    }
-    public void appointmentSearchButton(){
-
-    }
-    public void appointmentSearch(){
-
     }
 
     // An alert helper function that receives string input

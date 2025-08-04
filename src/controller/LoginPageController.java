@@ -1,6 +1,7 @@
 package controller;
 
 import dao.AppointmentDAO;
+import helper.Utility;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,30 +37,36 @@ import java.util.ResourceBundle;
 
 public class LoginPageController implements Initializable {
 
+    // The text beside their respective fields
     @FXML private Label usernameLabel;
     @FXML private Label passwordLabel;
     @FXML private Label locationLabel;
 
-    @FXML private TextField userNameID;
-    @FXML private PasswordField passwordID;
-
     @FXML private Button loginButton;
     @FXML private Button exitButton;
 
-
+    // Text for the location
     @FXML private Label locationID;
+
+    // The field that holds the typed username/password
     @FXML private TextField usernameField;
     @FXML private TextField passwordField;
 
+    // This was to set up a username and password to login, but I didn't notice that there were already provided in the database
+    /*
     static int userID = UserDatabase.incrementUserID();
     static User firstUser = new User(userID,"companyUser1","password123");
+    */
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // Replaces the locationID text with the users current location
         ZoneId zoneId = ZoneId.systemDefault();
         String location = zoneId.toString();
         locationID.setText(location);
 
+        // Loads the text in English or French depending on the language that is set on the users' computer
         Locale currentLocale = Locale.getDefault();
         ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 
@@ -67,11 +74,14 @@ public class LoginPageController implements Initializable {
 //        ResourceBundle messages = ResourceBundle.getBundle("messages", frenchLocale);
 
 
+        // Sets up the login page based on language set on computer
         String usernameText = messages.getString("username");
         String passwordText = messages.getString("password");
         String locationText = messages.getString("location");
         String loginText = messages.getString("login");
         String exitText = messages.getString("exit");
+
+        // .substring(0,1).toUpperCase() makes the first letter of the word capitalized
         usernameLabel.setText(usernameText.substring(0,1).toUpperCase() + usernameText.substring(1));
         passwordLabel.setText(passwordText.substring(0,1).toUpperCase() + passwordText.substring(1));
         locationLabel.setText(locationText.substring(0,1).toUpperCase() + locationText.substring(1));
@@ -81,14 +91,18 @@ public class LoginPageController implements Initializable {
     }
 
 
-    public static void addTestUser() {
-        UserDatabase.addUser(firstUser);
-    }
+//    public static void addTestUser() {
+//        UserDatabase.addUser(firstUser);
+//    }
+
+
+    // Method that logs the user in if the password and username matches
     @FXML
     private void loginButtonAction(ActionEvent event) {
         String usernameInput = usernameField.getText().trim();
         String passwordInput = passwordField.getText().trim();
 
+        // Checks if the username or password is empty
         if (usernameInput.isEmpty() && passwordInput.isEmpty()) {
             alertMessage(5);
             return;
@@ -100,7 +114,7 @@ public class LoginPageController implements Initializable {
             return;
         }
 
-        boolean login = false;
+        // Connects to the database
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
         String username = "sqlUser";
         String password = "passw0rd!";
@@ -111,8 +125,8 @@ public class LoginPageController implements Initializable {
                 ps.setString(2, passwordInput);
                 ResultSet rs = ps.executeQuery();
 
+                // If true, login/continue to /Home.fxml
                 if (rs.next()) {
-                    login = true;
                     logLogin(usernameInput, true);
 
                     checkUpcomingAppointments(usernameInput);
@@ -124,8 +138,6 @@ public class LoginPageController implements Initializable {
                     stage.setScene(new Scene(root));
                     stage.setTitle("Main Menu");
                     stage.show();
-
-
                 } else {
                     logLogin(usernameInput, false);
                     alertMessage(1);
@@ -133,7 +145,7 @@ public class LoginPageController implements Initializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-//            showAlert("Error", "An error occurred: " + e.getMessage());
+            Utility.showAlert("Error", "An error occurred: " + e.getMessage());
         }
     }
 
@@ -186,6 +198,7 @@ public class LoginPageController implements Initializable {
         }
     }
 
+    // Closes the application
     public void exitBtn(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Closing...");

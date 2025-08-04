@@ -22,14 +22,16 @@ import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
 
-    @FXML private TableView<Customers> customerTable;
-    @FXML private TableView<Appointments> appointmentTable;
+//    @FXML private TableView<Customers> customerTable;
+//    @FXML private TableView<Appointments> appointmentTable;
 
+    // The report based on the month and type
     @FXML private TableView<MonthlyTypeReport> monthlyTypeReportTable;
     @FXML private TableColumn<MonthlyTypeReport, String> monthCol;
     @FXML private TableColumn<MonthlyTypeReport, String> typeCol;
     @FXML private TableColumn<MonthlyTypeReport, Integer> totalCol;
 
+    // The report based on the customers' contact
     @FXML private TableView<ContactSchedule> contactScheduleTable;
     @FXML private TableColumn<ContactSchedule, Integer> apptIdCol;
     @FXML private TableColumn<ContactSchedule, String> apptTitleCol;
@@ -40,8 +42,8 @@ public class ReportsController implements Initializable {
     @FXML private TableColumn<ContactSchedule, Integer> apptCustIdCol;
     @FXML private TableColumn<ContactSchedule, String> apptContactCol;
 
-    @FXML
-    private TableView<AppointmentPerCustomer> appointmentsPerCustomerTable;
+    // The table that shows the amount of appointments per customer
+    @FXML private TableView<AppointmentPerCustomer> appointmentsPerCustomerTable;
     @FXML private TableColumn<AppointmentPerCustomer, Integer> custIdCol;
     @FXML private TableColumn<AppointmentPerCustomer, String> custNameCol;
     @FXML private TableColumn<AppointmentPerCustomer, Integer> apptCountCol;
@@ -71,6 +73,8 @@ public class ReportsController implements Initializable {
     }
 
 
+    // Method that populates the tables with their respective information (Report based on
+    // month and type, contact, and appointments per customer)
     public void populateReports() throws SQLException {
         ObservableList<MonthlyTypeReport> monthlyReport = FXCollections.observableArrayList();
         ObservableList<ContactSchedule> contactReport = FXCollections.observableArrayList();
@@ -152,6 +156,9 @@ public class ReportsController implements Initializable {
         appointmentsPerCustomerTable.setItems(customerAppointmentReport);
     }
 
+
+
+    // Returns to the previous menu
     public void returnBtn(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
         Parent root = loader.load();
