@@ -118,7 +118,7 @@ public class LoginPageController implements Initializable {
         /** Connects to the database */
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
         String username = "sqlUser";
-        String password = "passw0rd!";
+        String password = "Passw0rd!";
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
             String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {

@@ -45,7 +45,7 @@ public class AddAppointmentController {
 
     private final String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone=SERVER";
     private final String username = "sqlUser";
-    private final String password = "passw0rd!";
+    private final String password = "Passw0rd!";
 
     /** Function used to set up the menu before it fully loads */
     @FXML

@@ -50,7 +50,7 @@ public class AddCustomerController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
         String username = "sqlUser";
-        String password = "passw0rd!";
+        String password = "Passw0rd!";
 
         try (Connection connection = DriverManager.getConnection(url, username, password)){
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM countries");
@@ -152,7 +152,7 @@ public class AddCustomerController implements Initializable {
 
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
         String username = "sqlUser";
-        String password = "passw0rd!";
+        String password = "Passw0rd!";
 
         /** Attempts to execute the insert query */
         try (Connection connection = DriverManager.getConnection(url, username, password)) {

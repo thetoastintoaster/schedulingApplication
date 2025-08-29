@@ -114,7 +114,7 @@ public class HomeController implements Initializable {
 
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
         String username = "sqlUser";
-        String password = "passw0rd!";
+        String password = "Passw0rd!";
 
         try (Connection connection = DriverManager.getConnection(url, username, password)){
             Statement stmt = connection.createStatement();
@@ -179,7 +179,7 @@ public class HomeController implements Initializable {
     public void loadAppointments(){
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone=SERVER";
         String username = "sqlUser";
-        String password = "passw0rd!";
+        String password = "Passw0rd!";
     }
 
     /** Returns the selected customer */
@@ -283,7 +283,7 @@ public class HomeController implements Initializable {
 
                 String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone=SERVER";
                 String username = "sqlUser";
-                String password = "passw0rd!";
+                String password = "Passw0rd!";
 
                 /** Establishes a connection then runs the DELETE queries */
                 try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -350,7 +350,7 @@ public class HomeController implements Initializable {
 
                 String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone=SERVER";
                 String username = "sqlUser";
-                String password = "passw0rd!";
+                String password = "Passw0rd!";
 
                 try (Connection connection = DriverManager.getConnection(url, username, password)) {
 

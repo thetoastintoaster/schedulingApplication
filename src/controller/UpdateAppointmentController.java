@@ -43,7 +43,7 @@ public class UpdateAppointmentController {
 
     private final String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone=SERVER";
     private final String username = "sqlUser";
-    private final String password = "passw0rd!";
+    private final String password = "Passw0rd!";
 
     private Appointments selectedAppointment;
 //    int appointmentId = HomeController.selectedAppointmentToModify().getAppointmentId();

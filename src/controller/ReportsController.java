@@ -84,7 +84,7 @@ public class ReportsController implements Initializable {
 
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone=SERVER";
         String username = "sqlUser";
-        String password = "passw0rd!";
+        String password = "Passw0rd!";
 
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
 
