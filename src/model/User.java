@@ -1,14 +1,14 @@
 package model;
 
-/*
-This class was made initially to login, but I didn't notice there was already usernames and passwords in the database
-Leaving this here because I might want to extrapolate on this after the assignment is submitted
+/** This class was made initially to login, but I didn't notice there was already usernames and passwords in the database
+ * Leaving this here because I might want to extrapolate on this after the assignment is submitted
  */
 public class User {
     private int id;
     public String userName;
     public String password;
 
+    /** User constructor */
     public User(int id, String userName, String password) {
         this.id = id;
         this.userName = userName;

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Utility {
 
-    // Returns to the main screen
+    /** Returns to the main screen */
   public static void returnToHome(ActionEvent event) throws IOException {
       FXMLLoader modifyPartScreen = new FXMLLoader(Main.class.getResource("/Home.fxml"));
       Scene scene = new Scene(modifyPartScreen.load());
@@ -22,7 +22,7 @@ public class Utility {
       stage.show();
     }
 
-    // Show alert helper function
+    /** Show alert helper function */
     public static void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

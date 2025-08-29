@@ -23,16 +23,22 @@ import helper.Utility;
 import static helper.Utility.showAlert;
 
 
+/** Controller class for the add appointment menu */
 public class AddAppointmentController {
+    /** appointment text fields */
     @FXML private TextField appointmentIdField;
     @FXML private TextField appointmentNameField;
     @FXML private TextField appointmentDescriptionField;
     @FXML private TextField appointmentLocationField;
     @FXML private TextField appointmentTypeField;
+
+    /** DatePicker and ComboBoxes for the the appointment */
     @FXML private DatePicker appointmentStartDate;
     @FXML private DatePicker appointmentEndDate;
     @FXML private ComboBox<String> appointmentStartTime;
     @FXML private ComboBox<String> appointmentEndTime;
+
+    /** ComboBoxes for the customer, user and contact drop down menu*/
     @FXML private ComboBox<Integer> customerIdDropDownMenu;
     @FXML private ComboBox<Integer> userIdDropDownMenu;
     @FXML private ComboBox<Integer> contactIdDropDownMenu;
@@ -41,9 +47,10 @@ public class AddAppointmentController {
     private final String username = "sqlUser";
     private final String password = "passw0rd!";
 
+    /** Function used to set up the menu before it fully loads */
     @FXML
     public void initialize() {
-        // Populate time combo boxes with 30-minute increments
+        /** Populate time combo boxes with 30-minute increments */
         for (int hour = 0; hour < 24; hour++) {
             for (int min = 0; min < 60; min += 30) {
                 String time = String.format("%02d:%02d", hour, min);
@@ -55,19 +62,19 @@ public class AddAppointmentController {
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
             Statement stmt = conn.createStatement();
 
-            // Populate customer ID drop down menu
+            /** Populate customer ID drop down menu */
             ResultSet rsCustomers = stmt.executeQuery("SELECT Customer_ID FROM customers");
             while (rsCustomers.next()) {
                 customerIdDropDownMenu.getItems().add(rsCustomers.getInt("Customer_ID"));
             }
 
-            // Populate user ID drop down menu
+            /** Populate user ID drop down menu */
             ResultSet rsUsers = stmt.executeQuery("SELECT User_ID FROM users");
             while (rsUsers.next()) {
                 userIdDropDownMenu.getItems().add(rsUsers.getInt("User_ID"));
             }
 
-            // Populate contact ID drop down menu
+            /** Populate contact ID drop down menu */
             ResultSet rsContacts = stmt.executeQuery("SELECT Contact_ID FROM contacts");
             while (rsContacts.next()) {
                 contactIdDropDownMenu.getItems().add(rsContacts.getInt("Contact_ID"));
@@ -78,7 +85,8 @@ public class AddAppointmentController {
 
     }
 
-    // Adds the appointment to the database
+
+    /** Adds the appointment to the database */
     @FXML
     private void saveButton(ActionEvent event) throws SQLException {
         String name = appointmentNameField.getText();
@@ -103,23 +111,25 @@ public class AddAppointmentController {
                 return;
             }
 
-            // Gets the start date/end date and start time/end time and stores it into localStart/localEnd respectively
+
+            /** Gets the start date/end date and start time/end time and stores it into localStart/localEnd respectively */
             LocalDateTime localStart = LocalDateTime.of(startDate, startTime);
             LocalDateTime localEnd = LocalDateTime.of(endDate, endTime);
 
-            // Gets localStart/localEnd and applies zone information (I don't fully understand this right now, but I think it
-            // applies general zone information to prepare the variables for conversion later (zonedStart and zonedEnd
-            // are used for Eastern Time conversion and UTC conversion)
+            /** Gets localStart/localEnd and applies zone information (I don't fully understand this right now, but I think it
+             * applies general zone information to prepare the variables for conversion later (zonedStart and zonedEnd
+             * are used for Eastern Time conversion and UTC conversion)
+             * */
             ZoneId localZone = ZoneId.systemDefault();
             ZonedDateTime zonedStart = ZonedDateTime.of(localStart, localZone);
             ZonedDateTime zonedEnd = ZonedDateTime.of(localEnd, localZone);
 
-            // Convert to Eastern Time for business hour validation
+            /** Convert to Eastern Time for business hour validation */
             ZoneId easternZone = ZoneId.of("America/New_York");
             ZonedDateTime startET = zonedStart.withZoneSameInstant(easternZone);
             ZonedDateTime endET = zonedEnd.withZoneSameInstant(easternZone);
 
-            // Checks if the selected time is within business hours
+            /** Checks if the selected time is within business hours */
             LocalTime businessOpen = LocalTime.of(8, 0);
             LocalTime businessClose = LocalTime.of(22, 0);
 
@@ -128,7 +138,7 @@ public class AddAppointmentController {
                 return;
             }
 
-            // Convert to UTC
+            /** Convert to UTC */
             ZonedDateTime startUTC = zonedStart.withZoneSameInstant(ZoneOffset.UTC);
             ZonedDateTime endUTC = zonedEnd.withZoneSameInstant(ZoneOffset.UTC);
 
@@ -143,6 +153,7 @@ public class AddAppointmentController {
             String sql = "INSERT INTO appointments (title, description, location, type, start, end, customer_id, user_id, contact_id) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+            /** Connects to the database and inserts into the appointment table */
             try (Connection conn = DriverManager.getConnection(url, username, password);
                  PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -160,6 +171,7 @@ public class AddAppointmentController {
 
                 showAlert("Success", "Appointment added successfully!");
 
+                /** Returns to the home screen after adding the information to the database */
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/Home.fxml"));
                 Parent root = loader.load();
@@ -177,7 +189,7 @@ public class AddAppointmentController {
         }
     }
 
-    // Does not anything to the database and then returns to home
+    /** Does not do anything to the database and then returns to home */
     @FXML
     private void cancelButton(ActionEvent event)throws IOException {
         FXMLLoader loader = new FXMLLoader();

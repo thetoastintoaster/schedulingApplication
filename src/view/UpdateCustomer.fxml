@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateCustomer">
     <children>
-        <VBox alignment="CENTER" spacing="20.0" layoutX="0.0" layoutY="0.0" prefWidth="1280.0" prefHeight="720.0">
+        <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="720.0" prefWidth="1280.0" spacing="20.0">
             <children>
-                <Pane maxWidth="1187.0" maxHeight="614.0" style="-fx-border-color: BLACK; -fx-border-radius: 12px;">
+                <Pane maxHeight="614.0" maxWidth="1187.0" style="-fx-border-color: BLACK; -fx-border-radius: 12px;">
                     <children>
                         <Text fill="#404040" layoutX="56.0" layoutY="52.0" style="-fx-font-weight: bold;" text="Update Customer">
                             <font>
@@ -16,24 +17,21 @@
                             </font>
                         </Text>
                         <Label layoutX="88.0" layoutY="134.0" text="ID" />
-                        <TextField fx:id="customerIDField" editable="false" layoutX="144.0" layoutY="130.0" />
+                        <TextField fx:id="customerIDField" editable="false" layoutX="225.0" layoutY="129.0" />
                         <Label layoutX="89.0" layoutY="185.0" text="Name" />
-                        <TextField fx:id="customerNameField" layoutX="144.0" layoutY="181.0" prefHeight="26.0" prefWidth="161.0" />
+                        <TextField fx:id="customerNameField" layoutX="225.0" layoutY="180.0" prefHeight="26.0" prefWidth="161.0" />
                         <Label layoutX="92.0" layoutY="233.0" text="Address" />
-                        <TextField fx:id="customerAddressField" layoutX="157.0" layoutY="230.0" prefHeight="26.0" prefWidth="77.0" />
+                        <TextField fx:id="customerAddressField" layoutX="222.0" layoutY="228.0" prefHeight="26.0" prefWidth="77.0" />
                         <Label layoutX="92.0" layoutY="285.0" text="Postal Code" />
-                        <TextField fx:id="customerPostalCodeField" layoutX="183.0" layoutY="278.0" prefHeight="26.0" prefWidth="77.0" />
-                        <Label layoutX="95.0" layoutY="334.0" text="Phone Number" />
+                        <TextField fx:id="customerPostalCodeField" layoutX="222.0" layoutY="280.0" prefHeight="26.0" prefWidth="77.0" />
+                        <Label layoutX="94.0" layoutY="334.0" text="Phone Number" />
                         <TextField fx:id="customerPhoneField" layoutX="222.0" layoutY="329.0" prefHeight="26.0" prefWidth="77.0" />
-                        <Label layoutX="65.0" layoutY="367.0" text="Country" />
-                        <ComboBox fx:id="countryComboBox" layoutX="159.0" layoutY="362.0" prefHeight="31.0" prefWidth="211.0" promptText="Select a Country" />
-                        <Label layoutX="58.0" layoutY="440.0" text="State or Province" />
-                        <ComboBox fx:id="divisionComboBox" layoutX="189.0" layoutY="435.0" prefHeight="31.0" prefWidth="227.0" promptText="Select a State or Province" />
-                        <Button layoutX="886.0" layoutY="20.0" onAction="#searchButton" text="Search" />
-                        <Button layoutX="1006.0" layoutY="262.0" onAction="#addButton" text="Add" />
-                        <Button layoutX="945.0" layoutY="503.0" onAction="#removeButton" text="Remove Associated Part" />
-                        <Button layoutX="945.0" layoutY="543.0" onAction="#saveButton" text="Save" />
-                        <Button layoutX="1041.0" layoutY="543.0" onAction="#cancelButton" text="Cancel" />
+                        <Label layoutX="95.0" layoutY="383.0" text="Country" />
+                        <ComboBox fx:id="countryComboBox" layoutX="225.0" layoutY="378.0" prefHeight="31.0" prefWidth="211.0" promptText="Select a Country" />
+                        <Label layoutX="91.0" layoutY="440.0" text="State or Province" />
+                        <ComboBox fx:id="divisionComboBox" layoutX="225.0" layoutY="435.0" prefHeight="31.0" prefWidth="227.0" promptText="Select a State or Province" />
+                        <Button layoutX="945.0" layoutY="528.0" onAction="#saveButton" text="Save" />
+                        <Button layoutX="1041.0" layoutY="528.0" onAction="#cancelButton" text="Cancel" />
                     </children>
                 </Pane>
             </children>

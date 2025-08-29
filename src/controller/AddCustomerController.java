@@ -23,16 +23,21 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/** Controller class for the add customer menu */
 public class AddCustomerController implements Initializable {
+
+    /** Textfields for the customer */
     @FXML private TextField customerNameField;
     @FXML private TextField customerAddressField;
     @FXML private TextField customerPostalCodeField;
     @FXML private TextField customerPhoneField;
 
+    /** ComboBoxes for the country and division */
     @FXML private ComboBox<String> countryComboBox;
     @FXML private ComboBox<String> divisionComboBox;
 
-
+    /** The countryMap and divisionMap variables are used to map the id's of the
+     * countries and divisions to their names respectively */
     private HashMap<String, Integer> countryMap = new HashMap<>();
     private HashMap<String, Integer> divisionMap = new HashMap<>();
 
@@ -46,10 +51,10 @@ public class AddCustomerController implements Initializable {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM countries");
             ResultSet rs = stmt.executeQuery();
 
-            // List of the country names
+            /** List of the country names */
             ObservableList<String> countryNames = FXCollections.observableArrayList();
 
-            // Maps the country ids to the country names and then add all of it to the countryNames list
+            /** Maps the country ids to the country names and then add all of it to the countryNames list */
             while(rs.next()) {
              String country = rs.getString("Country");
              int countryID = rs.getInt("country_id");
@@ -57,7 +62,7 @@ public class AddCustomerController implements Initializable {
              countryNames.add(country);
             }
 
-            // Puts all of the country names in the combo box
+            /** Puts all of the country names in the combo box */
             countryComboBox.setItems(countryNames);
 
 
@@ -66,8 +71,8 @@ public class AddCustomerController implements Initializable {
             e.printStackTrace();
         }
 
-        // Once a country is selected, load all the related divisions/states to the divisions combo box
-        // A lambda expression is used here because it makes the code easier to read
+        /** Once a country is selected, load all the related divisions/states to the divisions combo box */
+        /** A lambda expression is used here because it makes the code easier to read */
         countryComboBox.setOnAction(event -> {
             String selectedCountry = countryComboBox.getValue();
             if (selectedCountry != null && countryMap.containsKey(selectedCountry)) {
@@ -76,7 +81,7 @@ public class AddCustomerController implements Initializable {
             }
     });
 }
-    // This method loads the divisions/states for the selected country
+    /** This method loads the divisions/states for the selected country */
     public void loadDivisions(int countryID, String url, String username, String password){
         divisionMap.clear();
 
@@ -85,10 +90,10 @@ public class AddCustomerController implements Initializable {
             ps.setInt(1, countryID);
             ResultSet rs = ps.executeQuery();
 
-            // List of the divisions/states
+            /** List of the divisions/states */
             ObservableList<String> divisions = FXCollections.observableArrayList();
 
-            // Maps the division IDs to the division names
+            /** Maps the division IDs to the division names */
             while (rs.next()) {
                 String division = rs.getString("division");
                 int divisionId = rs.getInt("division_id");
@@ -97,18 +102,14 @@ public class AddCustomerController implements Initializable {
                 divisions.add(division);
             }
 
-            // Puts all the division names of the selected country in the division combo box
+            /** Puts all the division names of the selected country in the division combo box */
             divisionComboBox.setItems(divisions);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void addButton(){
-
-    }
-
-    // Returns to main menu without saving anything
+    /** Returns to main menu without saving anything */
     public void cancelButton(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Home.fxml"));
@@ -121,38 +122,38 @@ public class AddCustomerController implements Initializable {
         stage.show();
     }
 
-    // Adds a new customer to the database
+    /** Adds a new customer to the database */
     @FXML
     private void saveButton(ActionEvent event) {
 
-        // Gets the text from the text fields
+        /** Gets the text from the text fields */
         String name = customerNameField.getText();
         String address = customerAddressField.getText();
         String postalCode = customerPostalCodeField.getText();
         String phone = customerPhoneField.getText();
         String selectedDivision = divisionComboBox.getValue();
 
-        // Checks if the fields are empty
+        /** Checks if the fields are empty */
         if (name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty() || selectedDivision == null) {
             showAlert("All fields must be filled out.");
             return;
         }
 
-        // Gets the selected division from the combo box but only the ID, not the actual name
-        // (because the foreign key and primary keys are integers)
+        /** Gets the selected division from the combo box but only the ID, not the actual name
+         * (because the foreign key and primary keys are integers) */
         int divisionId = divisionMap.get(selectedDivision);
 
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
         String username = "sqlUser";
         String password = "passw0rd!";
 
-        // Attempts to execute the insert query
+        /** Attempts to execute the insert query */
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String sql = "INSERT INTO customers (customer_name, address, postal_code, phone, division_id, create_date, created_by, last_update, last_updated_by) " +
                     "VALUES (?, ?, ?, ?, ?, NOW(), 'admin', NOW(), 'admin')";
             PreparedStatement ps = connection.prepareStatement(sql);
 
-            // Sets the values
+            /** Sets the values */
             ps.setString(1, name);
             ps.setString(2, address);
             ps.setString(3, postalCode);
@@ -163,13 +164,12 @@ public class AddCustomerController implements Initializable {
 
             showAlert("Customer added successfully!");
 
-            // optionally redirect to main screen
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // An alert helper function that receives string input
+    /** An alert helper function that receives string input */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(message);

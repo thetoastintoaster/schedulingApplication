@@ -1,8 +1,7 @@
 package model;
 
-/*
-This class was made initially to login, but I didn't notice there was already usernames and passwords in the database
-Leaving this here because I might want to extrapolate on this after the assignment is submitted
+/** This class was made initially to login, but I didn't notice there was already usernames and passwords in the database
+ * Leaving this here because I might want to extrapolate on this after the assignment is submitted
  */
 
 import javafx.collections.FXCollections;

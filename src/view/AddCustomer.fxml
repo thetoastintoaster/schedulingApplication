@@ -24,20 +24,19 @@
                     </font>
                 </Text>
                 <Label layoutX="90.0" layoutY="134.0" text="ID" />
-                <TextField fx:id="customerIDField" editable="false" layoutX="164.0" layoutY="130.0" promptText="Auto Gen - Disabled" />
-                <TextField id="customerNameField" fx:id="customerNameField" layoutX="164.0" layoutY="181.0" />
-                <TextField fx:id="customerAddressField" layoutX="164.0" layoutY="229.0" prefHeight="26.0" prefWidth="70.0" />
+                <TextField fx:id="customerIDField" editable="false" layoutX="187.0" layoutY="130.0" promptText="Auto Gen - Disabled" />
+                <TextField id="customerNameField" fx:id="customerNameField" layoutX="187.0" layoutY="181.0" />
+                <TextField fx:id="customerAddressField" layoutX="187.0" layoutY="229.0" prefHeight="26.0" prefWidth="70.0" />
                 <Label layoutX="90.0" layoutY="185.0" text="Name" />
-                <Label layoutX="92.0" layoutY="233.0" text="Address" />
-                <Label layoutX="92.0" layoutY="285.0" text="Postal Code" />
+                <Label layoutX="90.0" layoutY="233.0" text="Address" />
+                <Label layoutX="90.0" layoutY="285.0" text="Postal Code" />
                 <TextField fx:id="customerPostalCodeField" layoutX="187.0" layoutY="280.0" prefHeight="26.0" prefWidth="77.0" />
-                <Button layoutX="1006.0" layoutY="262.0" mnemonicParsing="false" onAction="#addButton" text="Add" />
                 <Button layoutX="1041.0" layoutY="543.0" mnemonicParsing="false" onAction="#cancelButton" text="Cancel" />
                 <Button layoutX="945.0" layoutY="543.0" mnemonicParsing="false" onAction="#saveButton" text="Save" />
-                <ComboBox id="countryComboBox" fx:id="countryComboBox" layoutX="159.0" layoutY="362.0" prefHeight="31.0" prefWidth="211.0" promptText="Select a Country" visibleRowCount="3" />
-                <ComboBox id="divisionComboBox" fx:id="divisionComboBox" layoutX="189.0" layoutY="435.0" prefHeight="31.0" prefWidth="227.0" promptText="Select a State or Province" />
-                <Label layoutX="65.0" layoutY="367.0" text="Country" />
-                <Label layoutX="58.0" layoutY="440.0" text="State or Province" />
+                <ComboBox id="countryComboBox" fx:id="countryComboBox" layoutX="187.0" layoutY="362.0" prefHeight="31.0" prefWidth="211.0" promptText="Select a Country" visibleRowCount="3" />
+                <ComboBox id="divisionComboBox" fx:id="divisionComboBox" layoutX="187.0" layoutY="435.0" prefHeight="31.0" prefWidth="227.0" promptText="Select a State or Province" />
+                <Label layoutX="90.0" layoutY="367.0" text="Country" />
+                <Label layoutX="90.0" layoutY="440.0" text="State or Province" />
                 <TextField id="customerPhoneField" fx:id="customerPhoneField" layoutX="196.0" layoutY="320.0" prefHeight="26.0" prefWidth="77.0" />
                 <Label layoutX="92.0" layoutY="325.0" text="Phone Number" />
             </children>

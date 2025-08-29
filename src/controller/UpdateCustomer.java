@@ -24,17 +24,21 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** Controller class for the update customer menu */
 public class UpdateCustomer implements Initializable {
+
+    /** */
     @FXML
     private TextField customerNameField;
     @FXML private TextField customerAddressField;
     @FXML private TextField customerPostalCodeField;
     @FXML private TextField customerPhoneField;
 
+    /** */
     @FXML private ComboBox<String> countryComboBox;
     @FXML private ComboBox<String> divisionComboBox;
 
-
+    /** Variables to map the id's to their respective names */
     private HashMap<String, Integer> countryMap = new HashMap<>();
     private HashMap<String, Integer> divisionMap = new HashMap<>();
 
@@ -57,10 +61,13 @@ public class UpdateCustomer implements Initializable {
                 countryNames.add(country);
             }
 
+            /** Sets the list of countries in the combobox */
             countryComboBox.setItems(countryNames);
 
 
             Customers selectedCustomer = HomeController.selectedCustomerToModify();
+
+            /** If the selected customer is not null, update the selected customer */
             if (selectedCustomer != null) {
                 customerNameField.setText(selectedCustomer.getName());
                 customerAddressField.setText(selectedCustomer.getAddress());
@@ -106,13 +113,18 @@ public class UpdateCustomer implements Initializable {
         });
     }
     public void addButton(){}
+
+    /** Updates the selected customer */
     public void saveButton(ActionEvent event) throws IOException{
+
+        /** Gets the texts and values*/
         String name = customerNameField.getText();
         String address = customerAddressField.getText();
         String postalCode = customerPostalCodeField.getText();
         String phone = customerPhoneField.getText();
         String selectedDivision = divisionComboBox.getValue();
 
+        /** Checks if any of the test fields or values are empty */
         if (name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty() || selectedDivision == null) {
             showAlert("All fields must be filled out.");
             return;
@@ -125,6 +137,7 @@ public class UpdateCustomer implements Initializable {
         String username = "sqlUser";
         String password = "passw0rd!";
 
+        /** Updates the selected customer with new values */
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String sql = "UPDATE customers SET " +
                     "Customer_Name = ?, " +
@@ -185,6 +198,7 @@ public class UpdateCustomer implements Initializable {
     public void removeButton(){}
     public void searchButton(){}
 
+    /** Load division helper method. This is to load the divisions for the combobox element */
     private void loadDivisions(int countryID, String url, String username, String password) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String sql = "SELECT division, division_ID FROM first_level_divisions WHERE Country_ID = ?";
@@ -209,6 +223,7 @@ public class UpdateCustomer implements Initializable {
         }
     }
 
+    /** Show alert helper function */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(message);

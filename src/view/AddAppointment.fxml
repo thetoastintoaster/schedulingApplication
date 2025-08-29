@@ -16,29 +16,29 @@
           </font>
         </Text>
         <Label layoutX="90.0" layoutY="134.0" text="ID" />
-        <TextField fx:id="appointmentIdField" editable="false" layoutX="164.0" layoutY="130.0" promptText="Auto Gen - Disabled" />
+        <TextField fx:id="appointmentIdField" editable="false" layoutX="187.0" layoutY="129.0" promptText="Auto Gen - Disabled" />
         <Label layoutX="90.0" layoutY="185.0" text="Title" />
-        <TextField fx:id="appointmentNameField" layoutX="164.0" layoutY="181.0" />
-        <Label layoutX="92.0" layoutY="233.0" text="Description" />
-        <TextField fx:id="appointmentDescriptionField" layoutX="190.0" layoutY="216.0" prefHeight="55.0" prefWidth="149.0" />
-        <Label layoutX="92.0" layoutY="285.0" text="Location" />
-        <TextField fx:id="appointmentLocationField" layoutX="187.0" layoutY="280.0" />
-        <Label layoutX="92.0" layoutY="325.0" text="Type" />
-        <TextField fx:id="appointmentTypeField" layoutX="196.0" layoutY="320.0" />
-        <Label layoutX="65.0" layoutY="367.0" text="Start Date" />
-        <DatePicker fx:id="appointmentStartDate" layoutX="164.0" layoutY="362.0" prefWidth="186.0" />
-        <Label layoutX="401.0" layoutY="404.0" text="Start Time" />
-        <ComboBox fx:id="appointmentStartTime" layoutX="480.0" layoutY="399.0" prefWidth="150.0" />
-        <Label layoutX="64.0" layoutY="435.0" text="End Date" />
-        <DatePicker fx:id="appointmentEndDate" layoutX="163.0" layoutY="430.0" prefWidth="186.0" />
+        <TextField fx:id="appointmentNameField" layoutX="187.0" layoutY="180.0" />
+        <Label layoutX="93.0" layoutY="244.0" text="Description" />
+        <TextField fx:id="appointmentDescriptionField" layoutX="192.0" layoutY="227.0" prefHeight="55.0" prefWidth="179.0" />
+        <Label layoutX="94.0" layoutY="298.0" text="Location" />
+        <TextField fx:id="appointmentLocationField" layoutX="189.0" layoutY="293.0" />
+        <Label layoutX="91.0" layoutY="349.0" text="Type" />
+        <TextField fx:id="appointmentTypeField" layoutX="189.0" layoutY="344.0" />
+        <Label layoutX="89.0" layoutY="389.0" text="Start Date" />
+        <DatePicker fx:id="appointmentStartDate" layoutX="189.0" layoutY="389.0" prefWidth="186.0" />
+        <Label layoutX="401.0" layoutY="394.0" text="Start Time" />
+        <ComboBox fx:id="appointmentStartTime" layoutX="480.0" layoutY="389.0" prefWidth="150.0" />
+        <Label layoutX="88.0" layoutY="446.0" text="End Date" />
+        <DatePicker fx:id="appointmentEndDate" layoutX="189.0" layoutY="443.0" prefWidth="186.0" />
         <Label layoutX="404.0" layoutY="446.0" text="End Time" />
         <ComboBox fx:id="appointmentEndTime" layoutX="480.0" layoutY="443.0" prefWidth="150.0" />
-        <Label layoutX="87.0" layoutY="487.0" text="Customer ID" />
-        <ComboBox fx:id="customerIdDropDownMenu" layoutX="196.0" layoutY="495.0" prefHeight="26.0" prefWidth="77.0" />
-        <Label layoutX="107.0" layoutY="535.0" text="User ID" />
-        <ComboBox fx:id="userIdDropDownMenu" layoutX="196.0" layoutY="533.0" prefHeight="26.0" prefWidth="77.0" />
-        <Label layoutX="104.0" layoutY="575.0" text="Contact ID" />
-        <ComboBox fx:id="contactIdDropDownMenu" layoutX="196.0" layoutY="574.0" prefHeight="26.0" prefWidth="77.0" />
+        <Label layoutX="439.0" layoutY="134.0" text="Customer ID" />
+        <ComboBox fx:id="customerIdDropDownMenu" layoutX="546.0" layoutY="129.0" prefHeight="26.0" prefWidth="77.0" />
+        <Label layoutX="445.0" layoutY="185.0" text="User ID" />
+        <ComboBox fx:id="userIdDropDownMenu" layoutX="546.0" layoutY="180.0" prefHeight="26.0" prefWidth="77.0" />
+        <Label layoutX="445.0" layoutY="244.0" text="Contact ID" />
+        <ComboBox fx:id="contactIdDropDownMenu" layoutX="546.0" layoutY="239.0" prefHeight="26.0" prefWidth="77.0" />
         <Button layoutX="945.0" layoutY="543.0" onAction="#saveButton" text="Save" />
         <Button layoutX="1041.0" layoutY="543.0" onAction="#cancelButton" text="Cancel" />
       </children>

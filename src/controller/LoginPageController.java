@@ -35,9 +35,10 @@ import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 
+/** Controller for the login page menu */
 public class LoginPageController implements Initializable {
 
-    // The text beside their respective fields
+    /** The text beside their respective fields */
     @FXML private Label usernameLabel;
     @FXML private Label passwordLabel;
     @FXML private Label locationLabel;
@@ -45,28 +46,28 @@ public class LoginPageController implements Initializable {
     @FXML private Button loginButton;
     @FXML private Button exitButton;
 
-    // Text for the location
+    /** Text for the location */
     @FXML private Label locationID;
 
-    // The field that holds the typed username/password
+    /** The field that holds the typed username/password */
     @FXML private TextField usernameField;
     @FXML private TextField passwordField;
 
-    // This was to set up a username and password to login, but I didn't notice that there were already provided in the database
-    /*
-    static int userID = UserDatabase.incrementUserID();
-    static User firstUser = new User(userID,"companyUser1","password123");
+    /* This was to set up a username and password to login, but I didn't notice that there were already provided in the database
+      // static int userID = UserDatabase.incrementUserID();
+      // static User firstUser = new User(userID,"companyUser1","password123");
     */
 
+    /** Function used to set up the menu before it fully loads */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        // Replaces the locationID text with the users current location
+        /** Replaces the locationID text with the users current location */
         ZoneId zoneId = ZoneId.systemDefault();
         String location = zoneId.toString();
         locationID.setText(location);
 
-        // Loads the text in English or French depending on the language that is set on the users' computer
+        /** Loads the text in English or French depending on the language that is set on the users' computer */
         Locale currentLocale = Locale.getDefault();
         ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 
@@ -74,14 +75,14 @@ public class LoginPageController implements Initializable {
 //        ResourceBundle messages = ResourceBundle.getBundle("messages", frenchLocale);
 
 
-        // Sets up the login page based on language set on computer
+        /** Sets up the login page based on language set on computer */
         String usernameText = messages.getString("username");
         String passwordText = messages.getString("password");
         String locationText = messages.getString("location");
         String loginText = messages.getString("login");
         String exitText = messages.getString("exit");
 
-        // .substring(0,1).toUpperCase() makes the first letter of the word capitalized
+        /** .substring(0,1).toUpperCase() makes the first letter of the word capitalized */
         usernameLabel.setText(usernameText.substring(0,1).toUpperCase() + usernameText.substring(1));
         passwordLabel.setText(passwordText.substring(0,1).toUpperCase() + passwordText.substring(1));
         locationLabel.setText(locationText.substring(0,1).toUpperCase() + locationText.substring(1));
@@ -96,13 +97,13 @@ public class LoginPageController implements Initializable {
 //    }
 
 
-    // Method that logs the user in if the password and username matches
+    /** Method that logs the user in if the password and username matches */
     @FXML
     private void loginButtonAction(ActionEvent event) {
         String usernameInput = usernameField.getText().trim();
         String passwordInput = passwordField.getText().trim();
 
-        // Checks if the username or password is empty
+        /** Checks if the username or password is empty */
         if (usernameInput.isEmpty() && passwordInput.isEmpty()) {
             alertMessage(5);
             return;
@@ -114,7 +115,7 @@ public class LoginPageController implements Initializable {
             return;
         }
 
-        // Connects to the database
+        /** Connects to the database */
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
         String username = "sqlUser";
         String password = "passw0rd!";
@@ -125,13 +126,13 @@ public class LoginPageController implements Initializable {
                 ps.setString(2, passwordInput);
                 ResultSet rs = ps.executeQuery();
 
-                // If true, login/continue to /Home.fxml
+                /** If true, login/continue to /Home.fxml */
                 if (rs.next()) {
                     logLogin(usernameInput, true);
 
                     checkUpcomingAppointments(usernameInput);
 
-                    // Load home screen
+                    /** Load home screen */
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
                     Parent root = loader.load();
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -149,7 +150,7 @@ public class LoginPageController implements Initializable {
         }
     }
 
-    // Method that logs login activity to a text file
+    /** Method that logs login activity to a text file */
     private void logLogin(String username, boolean success) {
         try (FileWriter writer = new FileWriter("login_activity.txt", true)) {
             ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.systemDefault());
@@ -160,16 +161,16 @@ public class LoginPageController implements Initializable {
         }
     }
 
-    // Method that checks the upcoming appointments
+    /** Method that checks the upcoming appointments */
     private void checkUpcomingAppointments(String username) {
         ZoneId userZone = ZoneId.systemDefault();
         ZonedDateTime now = ZonedDateTime.now(userZone);
         ZonedDateTime in15Min = now.plusMinutes(15);
 
-        // Gets all of the appointments
+        /** Gets all of the appointments */
         List<Appointments> appointments = AppointmentDAO.getAllAppointments();
 
-        // Filters the list of appointments for an appointment that starts within the next 15 minutes
+        /** Filters the list of appointments for an appointment that starts within the next 15 minutes */
         Optional<Appointments> upcomingAppointment = appointments.stream()
                 .filter(appointment -> {
                     ZonedDateTime startLocal = appointment.getStartDateTime()
@@ -179,7 +180,7 @@ public class LoginPageController implements Initializable {
                 })
                 .findFirst();
 
-        // If an appointment is within/not within the next 15 minutes, display an alert message
+        /** If an appointment is within/not within the next 15 minutes, display an alert message */
         if (upcomingAppointment.isPresent()) {
             Appointments appointment = upcomingAppointment.get();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -198,7 +199,7 @@ public class LoginPageController implements Initializable {
         }
     }
 
-    // Closes the application
+    /** Closes the application */
     public void exitBtn(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Closing...");
@@ -212,7 +213,7 @@ public class LoginPageController implements Initializable {
 
     }
 
-    // Method for the alert messages
+    /** Method for the alert messages */
     private void alertMessage(int alertType) {
 
         Locale currentLocale = Locale.getDefault();

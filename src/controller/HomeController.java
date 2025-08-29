@@ -24,26 +24,28 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** Controller class for the main menu */
 public class HomeController implements Initializable {
+
+    /** The customerToModify & appointmentToModify variables is for when the user
+     * selects a customer/appointment in the table */
     private static Customers customerToModify;
     private static Appointments appointmentToModify;
 
-//    private static Product appointmentToModify;
-
-
-    // The search field for the customers
-    @FXML private TextField customerSearchTxt;
-
-    // The table for the customers
+    /** The table for the customers */
     @FXML private TableView<Customers> customerTable;
+
+    /** The table for the appointments */
     @FXML private TableView<Appointments> appointmentTable;
 
+    /** TableColumn variables for the customer table*/
     @FXML private TableColumn<Customers, Integer> customerIDCol;
     @FXML private TableColumn<Customers, String> customerNameCol;
     @FXML private TableColumn<Customers, String> customerAddressCol;
     @FXML private TableColumn<Customers, String> customerPostalCodeCol;
     @FXML private TableColumn<Customers, String> customerPhoneCol;
 
+    /** TableColumn variables for the appointment table*/
     @FXML private TableColumn<Appointments, Integer> appointmentIDCol;
     @FXML private TableColumn<Appointments, String> appointmentNameCol;
     @FXML private TableColumn<Appointments, String> appointmentDescriptionCol;
@@ -55,21 +57,23 @@ public class HomeController implements Initializable {
     @FXML private TableColumn<Appointments, Integer> appointmentCustomerIDCol;
     @FXML private TableColumn<Appointments, Integer> appointmentUserIDCol;
 
+    /** Radio buttons for the month, week, and all  */
     @FXML private RadioButton monthRadioButton;
     @FXML private RadioButton weekRadioButton;
     @FXML private RadioButton allRadioButton;
     @FXML private ToggleGroup dateFilterGroup;
 
 
-    // Creates a list for the customers
+    /** Creates a list for the customers */
     private ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
 
-    // Creates a list for the appointments
+    /** Creates a list for the appointments */
     private ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
 
+    /** Function used to set up the menu before it fully loads */
     public void initialize(URL location, ResourceBundle resources) {
 
-        //Populate customers table view (no values yet, it just sets it up)
+        /** Populate customers table view (no values yet, it just sets it up) */
         customerTable.setItems(allCustomers);
         customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -78,7 +82,7 @@ public class HomeController implements Initializable {
         customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
 
-        // Populate appointment table view (no values yet, it just sets it up)
+        /** Populate appointment table view (no values yet, it just sets it up) */
         appointmentTable.setItems(allAppointments);
         appointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentNameCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -89,15 +93,15 @@ public class HomeController implements Initializable {
         appointmentCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         appointmentUserIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
-        // Properly sets up the start and end times for the appointments
+        /** Properly sets up the start and end times for the appointments */
         DateTimeFormatter newTimeFormat = DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a");
 
-        // A lambda expression is used here because it makes the code easier to read
+        /** A lambda expression is used here because it makes the code easier to read */
         appointmentStartCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStartDateTime().format(newTimeFormat)));
         appointmentEndCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndDateTime().format(newTimeFormat)));
 
 
-        // Radio buttons
+        /** Radio buttons */
         ToggleGroup dateFilterGroup = new ToggleGroup();
         monthRadioButton.setToggleGroup(dateFilterGroup);
         weekRadioButton.setToggleGroup(dateFilterGroup);
@@ -112,9 +116,11 @@ public class HomeController implements Initializable {
 
         try (Connection connection = DriverManager.getConnection(url, username, password)){
             Statement stmt = connection.createStatement();
+
+            /** Selects the customer table */
             ResultSet rs = stmt.executeQuery("SELECT * FROM customers");
 
-            // Populates the customer table
+            /** Populates the customer table */
             while(rs.next()) {
                 allCustomers.add(new Customers(
                         rs.getInt("customer_id"),
@@ -133,10 +139,12 @@ public class HomeController implements Initializable {
 
         try (Connection connection = DriverManager.getConnection(url, username, password)){
             Statement stmt = connection.createStatement();
+
+            /** Selects the appointments table */
             ResultSet rs = stmt.executeQuery("SELECT * FROM appointments");
 
-            // Replaces the contact ID's with the corresponding contact name so that the user
-            // sees the names instead of the ID's which could be confusing
+            /** Replaces the contact ID's with the corresponding contact name so that the user */
+            /** sees the names instead of the ID's which could be confusing */
             while(rs.next()) {
                 int contactId = rs.getInt("contact_id");
 
@@ -148,7 +156,7 @@ public class HomeController implements Initializable {
                         contactName = contactRs.getString("Contact_Name");
                     }
                 }
-                // Populates the appointment table
+                /** Populates the appointment table */
                 allAppointments.add(new Appointments(
                         rs.getInt("appointment_id"),
                         rs.getString("title"),
@@ -172,21 +180,21 @@ public class HomeController implements Initializable {
         String password = "passw0rd!";
     }
 
-    // Returns the selected customer
+    /** Returns the selected customer */
     public static Customers selectedCustomerToModify() {
         return customerToModify;
     }
 
-    // Returns the selected appointment
+    /** Returns the selected appointment */
     public static Appointments selectedAppointmentToModify() {
         return appointmentToModify;
     }
 
 
-    // Method that displays the modify customer screen
+    /** Method that displays the modify customer screen */
     public void displayModifyCustomer(ActionEvent event) throws IOException {
 
-        // Gets the selected customer
+        /** Gets the selected customer */
         customerToModify = customerTable.getSelectionModel().getSelectedItem();
 
         if (customerToModify != null) {
@@ -205,7 +213,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Alert message helper function
+    /** Alert message helper function */
     private void alertMessage(int alertType) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         switch (alertType) {
@@ -224,7 +232,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Method that filters the appointments based on which radio button is selected
+    /** Method that filters the appointments based on which radio button is selected */
     @FXML
     public void filterAppointments(ActionEvent event) {
         ObservableList<Appointments> filteredList = FXCollections.observableArrayList();
@@ -248,26 +256,26 @@ public class HomeController implements Initializable {
                 }
             }
         } else {
-            filteredList.addAll(allAppointments); // Show all
+            filteredList.addAll(allAppointments); /** Show all */
         }
 
         appointmentTable.setItems(filteredList);
     }
 
-    // Method to delete customer from the database and refreshes the customer table
+    /** Method to delete customer from the database and refreshes the customer table */
     public void deleteCustomer(ActionEvent event) throws IOException, SQLException {
 
-        // Gets selected customer
+        /** Gets selected customer */
         Customers selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 
-        // Shows alert if selected customer is not null
+        /** Shows alert if selected customer is not null */
         if(selectedCustomer != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Alert");
             alert.setContentText("Are you sure you want to delete?");
             Optional<ButtonType> result = alert.showAndWait();
 
-            // If customer is not null, delete it and the corresponding appointments from the database
+            /** If customer is not null, delete it and the corresponding appointments from the database */
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 int customerId = selectedCustomer.getCustomerId();
 
@@ -275,7 +283,7 @@ public class HomeController implements Initializable {
                 String username = "sqlUser";
                 String password = "passw0rd!";
 
-                // Establishes a connection then runs the DELETE queries
+                /** Establishes a connection then runs the DELETE queries */
                 try (Connection connection = DriverManager.getConnection(url, username, password)) {
 
                     String deleteAppointmentsQuery = "DELETE FROM appointments WHERE customer_id = ?";
@@ -308,7 +316,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Button that loads the report screen
+    /** Button that loads the report screen */
     public void reportsBtn(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Reports.fxml"));
@@ -321,20 +329,20 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    // Method to delete the selected appointment
+    /** Method to delete the selected appointment */
     public void deleteAppointment() throws SQLException {
 
-        // Gets selected appointment
+        /** Gets selected appointment */
         Appointments selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
 
-        // Shows alert if selected appointment is not null
+        /** Shows alert if selected appointment is not null */
         if(selectedAppointment != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Alert");
             alert.setContentText("Are you sure you want to delete?");
             Optional<ButtonType> result = alert.showAndWait();
 
-            // If appointment is not null, delete it and the corresponding appointments from the database
+            /** If appointment is not null, delete it and the corresponding appointments from the database */
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 int appointmentId = selectedAppointment.getAppointmentId();
 
@@ -366,7 +374,7 @@ public class HomeController implements Initializable {
 
     }
 
-    // Method that displays the modify appointment screen
+    /** Method that displays the modify appointment screen */
     public void displayModifyAppointment(ActionEvent event) throws IOException {
         appointmentToModify = appointmentTable.getSelectionModel().getSelectedItem();
 
@@ -386,7 +394,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Method that displays the add appointment screen
+    /** Method that displays the add appointment screen */
     public void displayAddAppointment(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/AddAppointment.fxml"));
@@ -399,7 +407,7 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    // Method that displays the add customer screen
+    /** Method that displays the add customer screen */
     public void displayAddCustomer(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/AddCustomer.fxml"));
@@ -412,7 +420,7 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    // Closes the application
+    /** Closes the application */
     public void exitBtn(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Closing...");

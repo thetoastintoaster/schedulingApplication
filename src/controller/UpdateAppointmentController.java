@@ -21,9 +21,10 @@ import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** Controller for the update appointment menu */
 public class UpdateAppointmentController {
 
-    // Initializing the variables to use for the respective fields in the update appointment window
+    /** Initializing the variables to use for the respective fields in the update appointment window */
     @FXML private TextField appointmentIdField;
     @FXML private TextField appointmentNameField;
     @FXML private TextField appointmentDescriptionField;
@@ -34,8 +35,8 @@ public class UpdateAppointmentController {
     @FXML private ComboBox<String> appointmentStartTime;
     @FXML private ComboBox<String> appointmentEndTime;
 
-    // Drop down menus (ContactId is a string because later in the code, the Id is
-    // replaced with the respective name of the contact
+    /** Drop down menus (ContactId is a string because later in the code, the Id
+     * is replaced with the respective name of the contact */
     @FXML private ComboBox<Integer> customerIdDropDownMenu;
     @FXML private ComboBox<Integer> userIdDropDownMenu;
     @FXML private ComboBox<String> contactIdDropDownMenu;
@@ -47,13 +48,13 @@ public class UpdateAppointmentController {
     private Appointments selectedAppointment;
 //    int appointmentId = HomeController.selectedAppointmentToModify().getAppointmentId();
 
-
+    /** Init function used to set up the menu before it fully loads */
     @FXML
     public void initialize() {
 
         selectedAppointment = HomeController.selectedAppointmentToModify();
 
-        // Populate time combo boxes with 30-minute increments
+        /** Populate time combo boxes with 30-minute increments */
         for (int hour = 0; hour < 24; hour++) {
             for (int min = 0; min < 60; min += 30) {
                 String time = String.format("%02d:%02d", hour, min);
@@ -62,6 +63,7 @@ public class UpdateAppointmentController {
             }
         }
 
+        /** If the selected appointment is not null, update that appointment */
             Appointments selectedAppointment = HomeController.selectedAppointmentToModify();
             if (selectedAppointment != null) {
                 appointmentIdField.setText(String.valueOf(selectedAppointment.getAppointmentId()));
@@ -83,19 +85,19 @@ public class UpdateAppointmentController {
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
             Statement stmt = conn.createStatement();
 
-            // Populate customer ID drop down menu
+            /** Populate customer ID drop down menu */
             ResultSet rsCustomers = stmt.executeQuery("SELECT Customer_ID FROM customers");
             while (rsCustomers.next()) {
                 customerIdDropDownMenu.getItems().add(rsCustomers.getInt("Customer_ID"));
             }
 
-            // Populate user ID drop down menu
+            /** Populate user ID drop down menu */
             ResultSet rsUsers = stmt.executeQuery("SELECT User_ID FROM users");
             while (rsUsers.next()) {
                 userIdDropDownMenu.getItems().add(rsUsers.getInt("User_ID"));
             }
 
-            // Populate contact ID drop down menu
+            /** Populate contact ID drop down menu */
             ResultSet rsContacts = stmt.executeQuery("SELECT Contact_Name FROM contacts");
             while (rsContacts.next()) {
                 contactIdDropDownMenu.getItems().add(rsContacts.getString("Contact_Name"));
@@ -106,7 +108,7 @@ public class UpdateAppointmentController {
 
     }
 
-    // Cancels the input and returns to /Home.fxml
+    /** Cancels the input and returns to /Home.fxml */
     public void cancelButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Alert");
@@ -127,11 +129,11 @@ public class UpdateAppointmentController {
         }
     }
 
-    // Adds the changes to the database
+    /** Adds the changes to the database */
     public void saveButton(ActionEvent actionEvent) {
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
 
-            // Look up contact_id based on the selected contact name
+            /** Look up contact_id based on the selected contact name */
             String contactName = contactIdDropDownMenu.getValue();
             int contactId;
 
@@ -148,7 +150,7 @@ public class UpdateAppointmentController {
                 }
             }
 
-            // Parse dates and times from the UI
+            /** Parse dates and times from the UI */
             LocalDate startDate = appointmentStartDate.getValue();
             LocalDate endDate = appointmentEndDate.getValue();
             LocalTime startTime = LocalTime.parse(appointmentStartTime.getValue());
@@ -158,15 +160,15 @@ public class UpdateAppointmentController {
             ZonedDateTime zonedStart = ZonedDateTime.of(LocalDateTime.of(startDate, startTime), localZone);
             ZonedDateTime zonedEnd = ZonedDateTime.of(LocalDateTime.of(endDate, endTime), localZone);
 
-            // Convert to UTC
+            /** Convert to UTC */
             ZonedDateTime startUTC = zonedStart.withZoneSameInstant(ZoneOffset.UTC);
             ZonedDateTime endUTC = zonedEnd.withZoneSameInstant(ZoneOffset.UTC);
 
-            // Convert to Timestamps
+            /** Convert to Timestamps */
             Timestamp startTimestamp = Timestamp.valueOf(startUTC.toLocalDateTime());
             Timestamp endTimestamp = Timestamp.valueOf(endUTC.toLocalDateTime());
 
-            // Check business hours
+            /** Check business hours */
              LocalTime businessOpen = LocalTime.of(8, 0);
              LocalTime businessClose = LocalTime.of(22, 0);
              ZoneId easternZone = ZoneId.of("America/New_York");
@@ -180,7 +182,7 @@ public class UpdateAppointmentController {
                  return;
              }
 
-             // Update query
+             /** Update query */
             String sql = "UPDATE appointments SET title=?, description=?, location=?, type=?, start=?, end=?, " +
                     "customer_id=?, user_id=?, contact_id=? WHERE appointment_id=?";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
