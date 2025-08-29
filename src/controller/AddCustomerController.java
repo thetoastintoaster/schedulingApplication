@@ -41,6 +41,11 @@ public class AddCustomerController implements Initializable {
     private HashMap<String, Integer> countryMap = new HashMap<>();
     private HashMap<String, Integer> divisionMap = new HashMap<>();
 
+    /** Init function that sets up the add customer controller. Also, once a country is selected, load
+     * all the related divisions/states to the divisions combo box.
+     * A lambda expression is used setOnAction method because it makes the code easier to read
+     * It also makes the code cleaner because I don't need to define an entire function; I can do
+     * what I need to do within the method */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
@@ -72,7 +77,9 @@ public class AddCustomerController implements Initializable {
         }
 
         /** Once a country is selected, load all the related divisions/states to the divisions combo box */
-        /** A lambda expression is used here because it makes the code easier to read */
+        /** A lambda expression is used here because it makes the code easier to read
+         *  It also makes the code cleaner because I don't need to define an entire function; I can do
+         *  what I need to do within the method*/
         countryComboBox.setOnAction(event -> {
             String selectedCountry = countryComboBox.getValue();
             if (selectedCountry != null && countryMap.containsKey(selectedCountry)) {

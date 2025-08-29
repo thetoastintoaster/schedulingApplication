@@ -161,7 +161,8 @@ public class LoginPageController implements Initializable {
         }
     }
 
-    /** Method that checks the upcoming appointments */
+    /** Method that checks the upcoming appointments
+     * A lambda expression is used in the filter method because it makes the code easier to read */
     private void checkUpcomingAppointments(String username) {
         ZoneId userZone = ZoneId.systemDefault();
         ZonedDateTime now = ZonedDateTime.now(userZone);

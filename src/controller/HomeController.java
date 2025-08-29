@@ -70,7 +70,9 @@ public class HomeController implements Initializable {
     /** Creates a list for the appointments */
     private ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
 
-    /** Function used to set up the menu before it fully loads */
+    /** Function used to set up the menu before it fully loads and a lambda expression is used in the
+     * setCellValueFactory methods for the appointmentStartCol and appointmentEndCol variables
+     * because it makes the code easier to read */
     public void initialize(URL location, ResourceBundle resources) {
 
         /** Populate customers table view (no values yet, it just sets it up) */

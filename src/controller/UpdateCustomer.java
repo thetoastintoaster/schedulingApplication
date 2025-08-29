@@ -42,6 +42,9 @@ public class UpdateCustomer implements Initializable {
     private HashMap<String, Integer> countryMap = new HashMap<>();
     private HashMap<String, Integer> divisionMap = new HashMap<>();
 
+    /** Init function for the update controller class
+     * A lambda expression is used in the setOnAction method for the countryComboBox
+     * because it makes the code easier to read */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String url = "jdbc:mysql://localhost/client_schedule?connectionTimeZone = SERVER";
@@ -103,7 +106,7 @@ public class UpdateCustomer implements Initializable {
             e.printStackTrace();
         }
 
-        // A lambda expression is used here because it makes the code easier to read
+        /** A lambda expression is used here because it makes the code easier to read */
         countryComboBox.setOnAction(event -> {
             String selectedCountry = countryComboBox.getValue();
             if (selectedCountry != null && countryMap.containsKey(selectedCountry)) {
